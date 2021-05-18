@@ -1,0 +1,59 @@
+#include <Servo.h> //Inclui a biblioteca para servos motores
+
+Servo servo_motor; // Para controlar os servos
+const int pot = A5; // Pino Pot conectado
+const int pinoLDR = A0; // Pino LDR conectado
+const int pinoLED = 7; // Pino LED conectado
+const int bip = 9; // Pino do Som conectado
+const int pinoLed = 6; // Pino do 2º LED conectado
+int posicao;
+bool incremento;
+int ler = 0; // Varíavel para armazenar o valor lido pelo ADC
+
+  void setup() {
+    //Configuração de pinos
+  pinMode(pinoLDR, INPUT); //Pino do LDR
+  pinMode(pinoLED, OUTPUT); //Pino do LED
+  pinMode(pot, INPUT); // Pino do Potenciômetro
+  servo_motor.attach(8); // Pino do servo motor
+  pinMode(bip, OUTPUT); // Pino do Som
+  pinMode(pinoLed, OUTPUT);
+   posicao = 0;
+    incremento = true; 
+  }
+
+void loop() {
+  //ler o valor de ADC no pino LDR
+  ler = analogRead(pot); // Faz a leitura do potenciometro
+  ler = map(ler,0,1023,0,180); // Ajusta a posição do servomotor de acordo com o potenciometro
+  servo_motor.write(ler); // Informa ao servo a posição em função da leitura do potenciometro
+  delay(1500);
+  Serial.println(posicao);
+  servo_motor.attach(posicao);
+  delay (1000);
+  
+  if (incremento){  
+    posicao ++;
+  if (posicao > 180) {
+    incremento = false;
+    posicao = 179;
+    tone (bip, 1000, 1000);
+    delay (1000);
+    ler = analogRead(pinoLDR);
+    digitalWrite(7, HIGH);
+   }
+  }else{
+    posicao --;
+
+   } 
+  if (posicao < 0){
+    incremento = true;
+    posicao = 1;
+    tone (bip, 1000, 1000);
+    delay (1000);
+    ler = analogRead(pinoLDR);
+    digitalWrite(6, HIGH);
+    digitalWrite(6, LOW);
+        }
+  } 
+  
