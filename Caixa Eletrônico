@@ -1,0 +1,65 @@
+package ac2.caixaeletrônico;
+
+import java.util.Scanner;
+
+public class AC2CaixaEletrônico {
+
+    public static void main(String[] args) {
+        //INÍCIO
+        System.out.println("-----Seja Bem-Vindo-----");
+        System.out.println("-------BANCO JAVA-------");
+
+        //CPF
+        Scanner ler = new Scanner(System.in);
+        String cpfDigitado, cpfCorreto = "654.659.956-70", senhaDigitada, senhaCorreta = "6569";
+        int tentativa = 0;
+        System.out.print("Digite seu CPF: ");
+        cpfDigitado = ler.nextLine();
+
+        //Verificar CPF
+        if (cpfCorreto.equals(cpfDigitado)) {
+            System.out.println("Acesso permitido");
+            //Senha
+            System.out.println("Insira sua senha: ");
+            senhaDigitada = ler.nextLine();
+
+            //Verificar Senha
+            do {
+                if (senhaCorreta.equals(senhaDigitada)) {
+                    System.out.println("------MENU-----");
+
+                } else {
+                    System.out.println("Senha incorreta");
+
+                }
+            } while (tentativa > 2);
+        } else {
+            System.out.println("Acesso negado");
+        }
+
+        //Exibir Menu
+        int menu = 0;
+        System.out.println("Digite uma função: ");
+        menu = ler.nextInt();
+
+        // Colher informação da operação desejada
+        switch (menu) {
+            case 1:
+                System.out.println("Saldo");
+                break;
+            case 2:
+                System.out.println("Depósito");
+                break;
+            case 3:
+                System.out.println("Saque");
+                break;
+            case 0:
+                System.out.println("Sair");
+                break;
+            default:
+                System.out.println("Função Inesistente");
+        }
+
+    }
+
+}
